@@ -9,3 +9,6 @@ __pycache__/
 
 # Data directory
 data
+
+# Mac .DS_Store
+.DS_Store
