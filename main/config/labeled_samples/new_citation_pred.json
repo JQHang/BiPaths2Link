@@ -1,0 +1,50 @@
+{
+    "task_data_path": "/user/mart_coo/mart_coo_innov/CompGraph/AMiner/task/new_citation_v1",
+    "label_table_root_path": "/user/mart_coo/mart_coo_innov/CompGraph/AMiner/raw",
+    "label_table_rel_path": "/author_new_cite_paper_in_2_years",
+    "label_table_format": "parquet",
+    "nodes_types": [
+        "Author",
+        "Paper"
+    ],
+    "nodes_cols_to_aliases": [
+        [
+            [
+                "author_id", "author_id"
+            ]
+        ],
+        [
+            [
+                "cite_paper_id", "cite_paper_id"
+            ]
+        ]
+    ],
+    "feat_cols_to_aliases": [],
+    "label_cols_to_aliases": [],
+    "time_cols_to_aliases": [
+        [
+            "year", "year"
+        ]
+    ],
+    "time_cols_formats": [
+        "%Y"
+    ],
+    "sample_limit": "year = '2017'",
+    "sample_types_limits": {
+        "train": [
+            {
+                "sample_limit": "sample_type = 'train'"
+            }
+        ],
+        "valid": [
+            {
+                "sample_limit": "sample_type = 'valid'"
+            }
+        ],
+        "test": [
+            {
+                "sample_limit": "sample_type = 'test'"
+            }
+        ]
+    }
+}

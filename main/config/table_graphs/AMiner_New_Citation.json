@@ -1,0 +1,413 @@
+{
+    "graph_time_cols_alias": [
+        "graph_year"
+    ],
+    "graph_time_cols_formats": [
+        "%Y"
+    ],
+    "table_default_config": {
+        "src_table_root_path": "/user/mart_coo/mart_coo_innov/CompGraph/AMiner/raw",
+        "src_table_format": "parquet",
+        "time_agg_root_path": "/user/mart_coo/mart_coo_innov/CompGraph/AMiner/time_aggregation",
+        "time_agg_table_format": "parquet",
+        "time_aggs_configs": [
+            {
+                "start_times_range": [-49, 0, 49],
+                "time_interval_len": 50,
+                "time_unit": "year",
+                "agg_funcs": ["first"]
+            }
+        ],
+        "graph_token_root_path": "/user/mart_coo/mart_coo_innov/CompGraph/AMiner/graph_token",
+        "graph_token_table_format": "parquet"
+    },
+    "node_schemas": {
+        "Paper": {
+            "node_col_types": [
+                "Paper_Node"
+            ],
+            "node_tables": {
+                "paper_doc_type": {
+                    "src_table_rel_path": "/paper",
+                    "node_cols": [
+                        "paper_id"
+                    ],
+                    "time_aggs_configs": [
+                        {
+                            "start_times_range": [-49, 0, 49],
+                            "time_interval_len": 50,
+                            "time_unit": "year",
+                            "agg_funcs": ["first"]
+                        }
+                    ]
+                },
+                "paper_citation_record": {
+                    "src_table_rel_path": "/paper_cite_paper",
+                    "node_cols": [
+                        "cite_paper_id"
+                    ],
+                    "time_aggs_configs": [
+                        {
+                            "start_times_range": [0, -10, -1],
+                            "time_interval_len": 1,
+                            "time_unit": "year",
+                            "agg_funcs": ["count_*"]
+                        },
+                        {
+                            "start_times_range": [-49, 0, 49],
+                            "time_interval_len": 50,
+                            "time_unit": "year",
+                            "agg_funcs": ["count_*"]
+                        }
+                    ]
+                },
+                "paper_author_count": {
+                    "src_table_rel_path": "/author_write_paper",
+                    "node_cols": [
+                        "paper_id"
+                    ],
+                    "time_aggs_configs": [
+                        {
+                            "start_times_range": [-49, 0, 49],
+                            "time_interval_len": 50,
+                            "time_unit": "year",
+                            "agg_funcs": ["count_*"]
+                        }
+                    ]
+                },
+                "paper_keyword_count": {
+                    "src_table_rel_path": "/paper_to_keyword",
+                    "node_cols": [
+                        "paper_id"
+                    ],
+                    "time_aggs_configs": [
+                        {
+                            "start_times_range": [-49, 0, 49],
+                            "time_interval_len": 50,
+                            "time_unit": "year",
+                            "agg_funcs": ["count_*"]
+                        }
+                    ]
+                }
+            }
+        },
+        "Author": {
+            "node_col_types": [
+                "Author_Node"
+            ],
+            "node_tables": {
+                "author_wrote_paper_record": {
+                    "src_table_rel_path": "/author_write_paper",
+                    "node_cols": [
+                        "author_id"
+                    ],
+                    "time_aggs_configs": [
+                        {
+                            "start_times_range": [0, -10, -1],
+                            "time_interval_len": 1,
+                            "time_unit": "year",
+                            "agg_funcs": ["count_*"]
+                        },
+                        {
+                            "start_times_range": [-49, 0, 49],
+                            "time_interval_len": 50,
+                            "time_unit": "year",
+                            "agg_funcs": ["count_*"]
+                        }
+                    ]
+                },
+                "author_past_org_record": {
+                    "src_table_rel_path": "/author_to_org",
+                    "node_cols": [
+                        "author_id"
+                    ],
+                    "time_aggs_configs": [
+                        {
+                            "start_times_range": [0, -10, -1],
+                            "time_interval_len": 1,
+                            "time_unit": "year",
+                            "agg_funcs": ["count_*", "mean", "max"]
+                        },
+                        {
+                            "start_times_range": [-49, 0, 49],
+                            "time_interval_len": 50,
+                            "time_unit": "year",
+                            "agg_funcs": ["count_*", "mean", "max"]
+                        }
+                    ]
+                }
+            }
+        },
+        "Org": {
+            "node_col_types": [
+                "Org_Node"
+            ],
+            "node_tables": {
+                "org_author_info": {
+                    "src_table_rel_path": "/author_to_org",
+                    "node_cols": [
+                        "org"
+                    ],
+                    "time_aggs_configs": [
+                        {
+                            "start_times_range": [0, -10, -1],
+                            "time_interval_len": 1,
+                            "time_unit": "year",
+                            "agg_funcs": ["count_*", "mean", "max"]
+                        },
+                        {
+                            "start_times_range": [-49, 0, 49],
+                            "time_interval_len": 50,
+                            "time_unit": "year",
+                            "agg_funcs": ["count_*", "mean", "max"]
+                        }
+                    ]
+                },
+                "org_paper_info": {
+                    "src_table_rel_path": "/paper_to_org",
+                    "node_cols": [
+                        "org"
+                    ],
+                    "time_aggs_configs": [
+                        {
+                            "start_times_range": [0, -10, -1],
+                            "time_interval_len": 1,
+                            "time_unit": "year",
+                            "agg_funcs": ["count_*", "mean", "max"]
+                        },
+                        {
+                            "start_times_range": [-49, 0, 49],
+                            "time_interval_len": 50,
+                            "time_unit": "year",
+                            "agg_funcs": ["count_*", "mean", "max"]
+                        }
+                    ]
+                }
+            }
+        },
+        "Venue": {
+            "node_col_types": [
+                "Venue_Node"
+            ],
+            "node_tables": {
+                "venue_paper_info": {
+                    "src_table_rel_path": "/paper_to_venue",
+                    "node_cols": [
+                        "venue"
+                    ],
+                    "time_aggs_configs": [
+                        {
+                            "start_times_range": [0, -10, -1],
+                            "time_interval_len": 1,
+                            "time_unit": "year",
+                            "agg_funcs": ["count_*"]
+                        },
+                        {
+                            "start_times_range": [-49, 0, 49],
+                            "time_interval_len": 50,
+                            "time_unit": "year",
+                            "agg_funcs": ["count_*"]
+                        }
+                    ]
+                }
+            }
+        },
+        "Keyword": {
+            "node_col_types": [
+                "Keyword_Node"
+            ],
+            "node_tables": {
+                "keyword_paper_info": {
+                    "src_table_rel_path": "/paper_to_keyword",
+                    "node_cols": [
+                        "keyword"
+                    ],
+                    "time_aggs_configs": [
+                        {
+                            "start_times_range": [0, -10, -1],
+                            "time_interval_len": 1,
+                            "time_unit": "year",
+                            "agg_funcs": ["count_*"]
+                        },
+                        {
+                            "start_times_range": [-49, 0, 49],
+                            "time_interval_len": 50,
+                            "time_unit": "year",
+                            "agg_funcs": ["count_*"]
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "edge_schemas": {
+        "Paper___linked_with___Paper": {
+            "linked_node_types": [
+                "Paper",
+                "Paper"
+            ],
+            "edge_tables": {
+                "paper_citation_relation":{
+                    "src_table_rel_path": "/paper_cite_paper",
+                    "linked_node_types_cols": [
+                        [
+                            "paper_id"
+                        ],
+                        [
+                            "cite_paper_id"
+                        ]
+                    ],
+                    "time_aggs_configs": [
+                        {
+                            "start_times_range": [-49, 0, 49],
+                            "time_interval_len": 50,
+                            "time_unit": "year",
+                            "agg_funcs": ["first"]
+                        }
+                    ]
+                }
+            }
+        },
+        "Paper___linked_with___Author": {
+            "linked_node_types": [
+                "Paper",
+                "Author"
+            ],
+            "edge_tables": {
+                "paper_author_relation":{
+                    "src_table_rel_path": "/author_write_paper",
+                    "linked_node_types_cols": [
+                        [
+                            "paper_id"
+                        ],
+                        [
+                            "author_id"
+                        ]
+                    ],
+                    "time_aggs_configs": [
+                        {
+                            "start_times_range": [-49, 0, 49],
+                            "time_interval_len": 50,
+                            "time_unit": "year",
+                            "agg_funcs": ["first"]
+                        }
+                    ]
+                }
+            }
+        },
+        "Paper___linked_with___Org": {
+            "linked_node_types": [
+                "Paper",
+                "Org"
+            ],
+            "edge_tables": {
+                "paper_org_relation":{
+                    "src_table_rel_path": "/paper_to_org",
+                    "linked_node_types_cols": [
+                        [
+                            "paper_id"
+                        ],
+                        [
+                            "org"
+                        ]
+                    ],
+                    "time_aggs_configs": [
+                        {
+                            "start_times_range": [-49, 0, 49],
+                            "time_interval_len": 50,
+                            "time_unit": "year",
+                            "agg_funcs": ["first"]
+                        }
+                    ]
+                }
+            }
+        },
+        "Paper___linked_with___Venue": {
+            "linked_node_types": [
+                "Paper",
+                "Venue"
+            ],
+            "edge_tables": {
+                "paper_venue_relation":{
+                    "src_table_rel_path": "/paper_to_venue",
+                    "linked_node_types_cols": [
+                        [
+                            "paper_id"
+                        ],
+                        [
+                            "venue"
+                        ]
+                    ],
+                    "time_aggs_configs": [
+                        {
+                            "start_times_range": [-49, 0, 49],
+                            "time_interval_len": 50,
+                            "time_unit": "year",
+                            "agg_funcs": ["first"]
+                        }
+                    ]
+                }
+            }
+        },
+        "Paper___linked_with___Keyword": {
+            "linked_node_types": [
+                "Paper",
+                "Keyword"
+            ],
+            "edge_tables": {
+                "paper_keyword_relation":{
+                    "src_table_rel_path": "/paper_to_keyword",
+                    "linked_node_types_cols": [
+                        [
+                            "paper_id"
+                        ],
+                        [
+                            "keyword"
+                        ]
+                    ],
+                    "time_aggs_configs": [
+                        {
+                            "start_times_range": [-49, 0, 49],
+                            "time_interval_len": 50,
+                            "time_unit": "year",
+                            "agg_funcs": ["first"]
+                        }
+                    ]
+                }
+            }
+        },
+        "Author___linked_with___Org": {
+            "linked_node_types": [
+                "Author",
+                "Org"
+            ],
+            "edge_tables": {
+                "author_org_relation":{
+                    "src_table_rel_path": "/author_to_org",
+                    "linked_node_types_cols": [
+                        [
+                            "author_id"
+                        ],
+                        [
+                            "org"
+                        ]
+                    ],
+                    "time_aggs_configs": [
+                        {
+                            "start_times_range": [0, -10, -1],
+                            "time_interval_len": 1,
+                            "time_unit": "year",
+                            "agg_funcs": ["first"]
+                        },
+                        {
+                            "start_times_range": [-49, 0, 49],
+                            "time_interval_len": 50,
+                            "time_unit": "year",
+                            "agg_funcs": ["count_*", "mean", "max"]
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
